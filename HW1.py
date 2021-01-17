@@ -28,7 +28,7 @@ def kthPerson(k, p, q):
         elif len([x for x in p if x >= q[i]]) < k:
             ret = [x*(y<q[i]) for x,y in zip(ret,q)]
         else:
-            ret[i]=[x for x,y in enumerate(p) if y>=q[i]][k-1]+1
+            ret[i] = [x for x,y in enumerate(p) if y>=q[i]][k-1]+1
     return ret
 
 # def kthPerson(k, p, q):
