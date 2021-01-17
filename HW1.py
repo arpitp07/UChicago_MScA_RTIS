@@ -4,22 +4,32 @@ k = 2
 p = [1, 4, 4, 3, 1, 2, 6]
 q = [1, 2, 3, 4, 5, 6, 7]
 
+# def kthPerson(k, p, q):
+#     ret = [0]*len(q)
+#     q_max_0 = max(q)+1
+#     for i in range(len(q)):
+#         if q[i] >= q_max_0:
+#             # ret.append(0)
+#             continue
+#         # # if min(sorted(p, reverse = True)[0:k]) < q[i]:
+#         elif len([x for x in p if x >= q[i]]) < k:
+#             # ret.append(0)
+#             q_max_0 = q[i]
+#         else:
+#             # ret.append([x for x,y in enumerate(p) if y>=q[i]][k-1]+1)
+#             ret[i]=[x for x,y in enumerate(p) if y>=q[i]][k-1]+1
+#     return ret
+
 def kthPerson(k, p, q):
-    ret = [0]*len(q)
-    q_max_0 = max(q)+1
+    ret = [1]*len(q)
     for i in range(len(q)):
-        if q[i] >= q_max_0:
-            # ret.append(0)
+        if ret[i] == 0:
             continue
-        # # if min(sorted(p, reverse = True)[0:k]) < q[i]:
         elif len([x for x in p if x >= q[i]]) < k:
-            # ret.append(0)
-            q_max_0 = q[i]
+            ret = [x*(y<q[i]) for x,y in zip(ret,q)]
         else:
-            # ret.append([x for x,y in enumerate(p) if y>=q[i]][k-1]+1)
             ret[i]=[x for x,y in enumerate(p) if y>=q[i]][k-1]+1
     return ret
-
 
 # def kthPerson(k, p, q):
 #     # Write your code here
