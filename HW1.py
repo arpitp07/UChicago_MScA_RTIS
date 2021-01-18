@@ -1,9 +1,15 @@
 import timeit
+import random
 import heapq
 
 k = 2
 p = [1, 4, 4, 3, 1, 2, 6]
 q = [1, 2, 3, 4, 5, 6, 7]
+
+# TC4
+k = 30089
+p = [random.randint(1, 99999) for i in range(71229)]
+q = [random.randint(2, 99992) for i in range(14809)]
 
 # heapq.heapify(p)
 # def kthPerson(k, p, q):
@@ -22,18 +28,18 @@ q = [1, 2, 3, 4, 5, 6, 7]
 #             ret[i]=[x for x,y in enumerate(p) if y>=q[i]][k-1]+1
 #     return ret
 
-def kthPerson(k, p, q):
-    ret = [1]*len(q)
-    for i, j in enumerate(q):
-        if ret[i] == 0:
-            continue
-        elif j in q[0:i]:
-            ret[i] = ret[q.index(j)]
-        elif len([x for x in p if x >= j]) < k:
-            ret = [x*(y<j) for x,y in zip(ret,q)]
-        else:
-            ret[i] = [x for x,y in enumerate(p) if y>=j][k-1]+1
-    return ret
+# def kthPerson(k, p, q):
+#     ret = [1]*len(q)
+#     for i, j in enumerate(q):
+#         if ret[i] == 0:
+#             continue
+#         elif j in q[0:i]:
+#             ret[i] = ret[q.index(j)]
+#         elif len([x for x in p if x >= j]) < k:
+#             ret = [x*(y<j) for x,y in zip(ret,q)]
+#         else:
+#             ret[i] = [x for x,y in enumerate(p) if y>=j][k-1]+1
+#     return ret
 
 # def kthPerson(k, p, q):
 #     ret = []
@@ -50,6 +56,28 @@ def kthPerson(k, p, q):
 #                 ret.append(0)
 #                 _=1
 #     return ret
+
+def kthPerson(k, p, q):
+    ret = [1]*len(q)
+    for i, j in enumerate(q):
+        if k > len(p):
+            ret = [0]*len(q)
+            break
+        elif ret[i] == 0:
+            continue
+        elif j in q[:i]:
+            ret[i] = ret[q.index(j)]
+        else:
+            try:
+                p_dup = p[k:]
+                bus_heap = p[:k]
+                heapq.heapify(bus_heap)
+                while bus_heap[0] < j:
+                    heapq.heapreplace(bus_heap, p_dup.pop(0))
+                ret[i] = len(p) - len(p_dup)
+            except IndexError:
+                ret = [x*(y<j) for x,y in zip(ret,q)]
+    return ret
 
 start = timeit.default_timer()
 print(kthPerson(k, p, q))
