@@ -5,27 +5,27 @@ import heapq
 # TC 1
 k = 2
 p = [1, 4, 4, 3, 1, 2, 6]
-q = [1, 2, 3, 4, 5, 6, 7]
+q = [1, 5, 5, 5, 2, 2, 2]
 
-# TC4
-k = 30089
-p = [random.randint(1, 99999) for i in range(71229)]
-q = [random.randint(2, 99992) for i in range(14809)]
+# # TC4
+# k = 30089
+# p = [random.randint(1, 99999) for i in range(71229)]
+# q = [random.randint(2, 99992) for i in range(14809)]
 
-# TC6
-k = 8799
-p = [random.randint(1, 99996) for i in range(54156)]
-q = [random.randint(1, 100000) for i in range(37788)]
+# # TC6
+# k = 8799
+# p = [random.randint(1, 99996) for i in range(54156)]
+# q = [random.randint(1, 100000) for i in range(37788)]
 
-# TC7
-k = 19276
-p = [random.randint(4, 99993) for i in range(25557)]
-q = [random.randint(1, 100000) for i in range(95812)]
+# # TC7
+# k = 19276
+# p = [random.randint(4, 99993) for i in range(25557)]
+# q = [random.randint(1, 100000) for i in range(95812)]
 
-# TC8
-k = 87744
-p = [random.randint(2, 99998) for i in range(97804)]
-q = [random.randint(1, 100000) for i in range(61171)]
+# # TC8
+# k = 87744
+# p = [random.randint(2, 99998) for i in range(97804)]
+# q = [random.randint(1, 100000) for i in range(61171)]
 
 # heapq.heapify(p)
 # def kthPerson(k, p, q):
@@ -73,26 +73,49 @@ q = [random.randint(1, 100000) for i in range(61171)]
 #                 _=1
 #     return ret
 
+# def kthPerson(k, p, q):
+#     ret = [1]*len(q)
+#     for i, j in enumerate(q):
+#         if k > len(p):
+#             ret = [0]*len(q)
+#             break
+#         elif ret[i] == 0:
+#             continue
+#         elif j in q[:i]:
+#             ret[i] = ret[q.index(j)]
+#         else:
+#             try:
+#                 p_dup = p[k:]
+#                 bus_heap = p[:k]
+#                 heapq.heapify(bus_heap)
+#                 while bus_heap[0] < j:
+#                     heapq.heapreplace(bus_heap, p_dup.pop(0))
+#                 ret[i] = len(p) - len(p_dup)
+#             except IndexError:
+#                 ret = [x*(y<j) for x,y in zip(ret,q)]
+#     return ret
+
 def kthPerson(k, p, q):
-    ret = [1]*len(q)
-    for i, j in enumerate(q):
+    ret = [0]*len(q)
+    q_sort = [(x[1], x[0]) for x in enumerate(q)]
+    heapq.heapify(q_sort)
+    q_sort = [heapq.heappop(q_sort) for i in range(len(q_sort))]
+    bus_heap = p[:k]
+    p_dup = p[k:]
+    heapq.heapify(bus_heap)
+    
+    for (i, (j, j_ret)) in enumerate(q_sort):
         if k > len(p):
-            ret = [0]*len(q)
             break
-        elif ret[i] == 0:
-            continue
-        elif j in q[:i]:
-            ret[i] = ret[q.index(j)]
+        elif j == [x for x,y in q_sort][i-1]:
+            ret[j_ret] = ret[q_sort[i-1][1]]
         else:
             try:
-                p_dup = p[k:]
-                bus_heap = p[:k]
-                heapq.heapify(bus_heap)
                 while bus_heap[0] < j:
                     heapq.heapreplace(bus_heap, p_dup.pop(0))
-                ret[i] = len(p) - len(p_dup)
+                ret[j_ret] = len(p) - len(p_dup)
             except IndexError:
-                ret = [x*(y<j) for x,y in zip(ret,q)]
+                break
     return ret
 
 start = timeit.default_timer()
