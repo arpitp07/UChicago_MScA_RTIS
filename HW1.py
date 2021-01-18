@@ -1,7 +1,7 @@
 import timeit
 import heapq
 
-k = 3
+k = 2
 p = [1, 4, 4, 3, 1, 2, 6]
 q = [1, 2, 3, 4, 5, 6, 7]
 
@@ -24,20 +24,39 @@ q = [1, 2, 3, 4, 5, 6, 7]
 
 def kthPerson(k, p, q):
     ret = [1]*len(q)
-    for i in range(len(q)):
+    for i, j in enumerate(q):
         if ret[i] == 0:
             continue
-        elif len([x for x in p if x >= q[i]]) < k:
-            ret = [x*(y<q[i]) for x,y in zip(ret,q)]
+        elif j in q[0:i]:
+            ret[i] = ret[q.index(j)]
+        elif len([x for x in p if x >= j]) < k:
+            ret = [x*(y<j) for x,y in zip(ret,q)]
         else:
-            ret[i] = [x for x,y in enumerate(p) if y>=q[i]][k-1]+1
+            ret[i] = [x for x,y in enumerate(p) if y>=j][k-1]+1
     return ret
+
+# def kthPerson(k, p, q):
+#     ret = []
+#     _=0
+#     for i, j in enumerate(q):
+#         if _==1 & (j >= q[ret.index(0)]):
+#             ret.append(0)
+#         elif j in q[0:i]:
+#             ret.append(ret[q.index(j)])
+#         if len([x for x in p if x >= j]) >= k:
+#             try:
+#                 ret.append([x for x,y in enumerate(p) if y>=j][k-1]+1)
+#             except IndexError:
+#                 ret.append(0)
+#                 _=1
+#     return ret
 
 start = timeit.default_timer()
 print(kthPerson(k, p, q))
 stop = timeit.default_timer()
 execution_time = stop - start
 print(f"Program executed in {execution_time}")
+
 
 # ret = []
 # for i in range(len(q)):
@@ -65,4 +84,3 @@ print(f"Program executed in {execution_time}")
 #         else:
 #             ret.append([x for x,y in enumerate(p) if y>=q[i][1]][k-1]+1)
 #     return [x for x,y in sorted(zip(ret, [x for x,y in q]), key=lambda x:x[1])]
-
