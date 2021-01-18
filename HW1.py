@@ -2,6 +2,7 @@ import timeit
 import random
 import heapq
 
+# TC 1
 k = 2
 p = [1, 4, 4, 3, 1, 2, 6]
 q = [1, 2, 3, 4, 5, 6, 7]
@@ -10,6 +11,21 @@ q = [1, 2, 3, 4, 5, 6, 7]
 k = 30089
 p = [random.randint(1, 99999) for i in range(71229)]
 q = [random.randint(2, 99992) for i in range(14809)]
+
+# TC6
+k = 8799
+p = [random.randint(1, 99996) for i in range(54156)]
+q = [random.randint(1, 100000) for i in range(37788)]
+
+# TC7
+k = 19276
+p = [random.randint(4, 99993) for i in range(25557)]
+q = [random.randint(1, 100000) for i in range(95812)]
+
+# TC8
+k = 87744
+p = [random.randint(2, 99998) for i in range(97804)]
+q = [random.randint(1, 100000) for i in range(61171)]
 
 # heapq.heapify(p)
 # def kthPerson(k, p, q):
