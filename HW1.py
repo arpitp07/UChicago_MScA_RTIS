@@ -3,7 +3,7 @@ import random
 import heapq
 
 # TC 1
-k = 2
+k = 3
 p = [1, 4, 4, 3, 1, 2, 6]
 q = [1, 5, 5, 5, 2, 2, 2]
 
@@ -122,26 +122,24 @@ def kthPerson(k, p, q):
     ret = [0]*len(q)
     q_sort = sorted([(x[1], x[0]) for x in enumerate(q)])
     bus_heap = p[:k]
-    # p_dup = p[k:]
+    p_dup = p[k:]
     index = k
     j_last = None
     heapq.heapify(bus_heap)
-    
     for (i, (j, j_ret)) in enumerate(q_sort):
         if k > len(p):
             break
         elif j == j_last:
             ret[j_ret] = index
-            
         else:
-            while bus_heap[0] < j:
-                bus_heap = p[index-1:index + k-1]
-                if len(bus_heap) < k:
-                    return ret
-                heapq.heapify(bus_heap)
-                index += 1
-            ret[j_ret] = index
-            j_last = j
+            try:
+                while bus_heap[0] < j:
+                    heapq.heapreplace(bus_heap, p_dup.pop(0))
+                    index += 1
+                ret[j_ret] = index
+                j_last = j
+            except IndexError:
+                break
     return ret
 
 
