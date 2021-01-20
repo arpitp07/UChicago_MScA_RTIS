@@ -2,10 +2,10 @@ import timeit
 import random
 import heapq
 
-# TC 1
-k = 3
-p = [1, 4, 4, 3, 1, 2, 6]
-q = [1, 5, 5, 5, 2, 2, 2]
+# # TC 1
+# k = 3
+# p = [1, 4, 4, 3, 1, 2, 6]
+# q = [1, 5, 5, 5, 2, 2, 2]
 
 # # TC4
 # k = 30089
@@ -22,10 +22,10 @@ q = [1, 5, 5, 5, 2, 2, 2]
 # p = [random.randint(4, 99993) for i in range(25557)]
 # q = [random.randint(1, 100000) for i in range(95812)]
 
-# # TC8
-# k = 87744
-# p = [random.randint(2, 99998) for i in range(97804)]
-# q = [random.randint(1, 100000) for i in range(61171)]
+# TC8
+k = 87744
+p = [random.randint(2, 99998) for i in range(97804)]
+q = [random.randint(1, 100000) for i in range(61171)]
 
 # heapq.heapify(p)
 # def kthPerson(k, p, q):
