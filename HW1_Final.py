@@ -35,10 +35,10 @@ def kthPerson(k, p, q):
     index = k
     j_last = None
     heapq.heapify(bus_heap)
+    if k > len(p):
+        return ret
     for (i, (j, j_ret)) in enumerate(q_sort):
-        if k > len(p):
-            break
-        elif j == j_last:
+        if j == j_last:
             ret[j_ret] = index
         else:
             try:
