@@ -3,7 +3,7 @@ import random
 import heapq
 
 # TC 1
-k = 3
+k = 2
 p = [1, 4, 4, 3, 1, 2, 6]
 q = [1, 5, 5, 5, 2, 2, 2]
 
