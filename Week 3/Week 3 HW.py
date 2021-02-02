@@ -187,5 +187,5 @@ def test2():
 
 
 if __name__ == '__main__':
-    test_number = 1
+    test_number = int(input().strip())
     globals()['test'+str(test_number)]()
