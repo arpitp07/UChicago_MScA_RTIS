@@ -20,5 +20,3 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         rec.append(received)
         print(f"Average: {sum(rec)/len(rec)}")
         # time.sleep(1)    
-
-# print("Sent:     {}".format(data))

@@ -13,7 +13,8 @@ logger.addHandler(logging.NullHandler())
 
 
 # YOUR CODE HERE
-
+class Bank():
+    pass
 
 ######################################
 ##    DON'T CODE AFTER THIS LINE   ###
