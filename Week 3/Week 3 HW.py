@@ -138,20 +138,26 @@ class Trader:
         self.s.connect(["localhost", 9999])
     
     def trade(self):
-        self.send_order(self.id)
-        self.listen_market()
+        if self.id == 0:
+            self.send_order(self.id)
+        self.listen_market(self.id)
     
     def send_order(self, id):
         price = 1
         quantity = 100
-        side = 'buy'
-        if id == 0: side = 'sell'
-        
+        side = 'sell'
         order = {'price' : price, 'quantity' : quantity, 'side' : side, 'id' : id}
         self.s.sendall(json.dumps(order).encode('utf-8'))
     
-    def listen_market(self):
-        self.s.listen(5)
+    def listen_market(self, id):
+        order_1 = self.s.recv(1024)
+        if order_1:
+            order_1 = json.loads(order_1)
+            order_1['side'] = 'buy'
+            order_1['id'] = id
+            self.s.sendall(json.dumps(order_1).encode('utf-8'))
+        else:
+            pass
 
 
 def test1():
@@ -187,5 +193,6 @@ def test2():
 
 
 if __name__ == '__main__':
-    test_number = int(input().strip())
+    test_number = 2
+    # test_number = int(input().strip())
     globals()['test'+str(test_number)]()
