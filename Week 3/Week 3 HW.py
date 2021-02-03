@@ -138,27 +138,24 @@ class Trader:
         self.s.connect(["localhost", 9999])
     
     def trade(self):
-        price = 1
-        quantity = 100
-        side = 'sell'
-        order = {'price' : price, 'quantity' : quantity, 'side' : side, 'id' : self.id}
+        if self.id == 0: 
+            order = {'price' : 1, 'quantity' : 100, 'side' : 'sell', 'id' : self.id}
+            self.send_order(order)
         
-        if self.id == 0: self.send_order(order)
-        self.listen_market(self.id)
+        order = self.listen_market()
+        if order:
+            order = json.loads(order)
+            order['side'] = 'buy'
+            order['id'] = self.id
+            self.send_order(order)
+        else:
+            pass        
     
     def send_order(self, order):
         self.s.sendall(json.dumps(order).encode('utf-8'))
     
-    def listen_market(self, id):
-        order = self.s.recv(1024)
-        if order:
-            order = json.loads(order)
-            order['side'] = 'buy'
-            order['id'] = id
-            self.send_order(order)
-        else:
-            pass
-
+    def listen_market(self):
+        return self.s.recv(1024)
 
 def test1():
     ex1=Exchange()
