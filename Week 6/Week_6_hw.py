@@ -139,33 +139,39 @@ def find_node(start, key):
     # takes an existing node in the list as the start value and searchs for the node which is responsible for the given key
     curr = start
     while True:
-        if (curr.id < key) & (curr.next.id >= key):
-            return curr
-        if curr.next == start:
-            return CircularLinkedList.head
+        if (key > curr.id) & (key <= curr.next.id):
+            return curr.next
+        elif (curr.id > curr.next.id) & ((key >= curr.id) | (key <= curr.next.id)):
+            return curr.next
         curr = curr.next
     
 def store(start, key, value):
     # finds the node responsible for the key starting from the "start" node and returns the value of the key stored in that node
-    curr = start
-    while True:
-        if curr.id >= key:
-            curr.data[key] = value
-            return
-        if curr.next == start:
-            return
-        curr = curr.next
+    # curr = start
+    # while True:
+    #     if (key > curr.id) & (key <= curr.next.id):
+    #         curr.next.data[key] = value
+    #         return
+    #     elif (curr.id > curr.next.id) & ((key >= curr.id) | (key <= curr.next.id)):
+    #         curr.next.data[key] = value
+    #         return
+    #     curr = curr.next
+    node = find_node(start, key)
+    node.data[key] = value
+    return
     # pass
     
 def lookup(start, key):
     #find the value stored at the key starting at the node "start" and traversing the list
-    curr = start
-    while True:
-        if curr.id >= key:
-            return curr.data[key]
-        if curr.next == start:
-            return
-        curr = curr.next
+    # curr = start
+    # while True:
+    #     if (key > curr.id) & (key <= curr.next.id):
+    #         return curr.next.data[key]
+    #     elif (curr.id > curr.next.id) & ((key >= curr.id) | (key <= curr.next.id)):
+    #         return curr.next.data[key]
+    #     curr = curr.next
+    node = find_node(start, key)
+    return node.data[key]
     
 def update(node, k=k_bit):
     # updates the finger table for given node
@@ -200,22 +206,28 @@ def find_finger(node, key, k=k_bit):
         if key >= curr.finger[i].id:
             curr = curr.finger[i]
             i=k
-        elif (i == 1) & (curr.finger[i].id > key):
-            return curr.finger[i]
-        elif (key < curr.id) & (curr.id < curr.next.id):
-            curr = curr.finger[k]
+        elif (curr.id > curr.next.id) & ((key >= curr.id) | (key <= curr.next.id)):
+            return curr.finger[1]
+        elif (i==1) & (key <= curr.finger[i].id) & (key < curr.id):
+            curr = curr.finger[i]
             i=k
+        # elif (key < curr.id) & (curr.id < curr.next.id):
+        elif (i==1) & (key <= curr.finger[i].id) & (key > curr.id):
+            return curr.finger[i]
         else:
             i-=1
 
     
 def finger_lookup(start, key):
     # find the value stored at the key using finger table lookups starting with node "start"
-    pass
+    node = find_finger(start, key)
+    return node.data
 
 def finger_store(start, key, value):
     # store key value pair using finger tables starting with node "start"
-    pass
+    node = find_finger(start, key)
+    node.data = value
+    return
     
     
 def case3():
@@ -310,13 +322,6 @@ def case9():
     print(str(node.data) + '\n')
     print(str(node.id) + '\n')
     
-    
-# case2()
-# case3()
-cll = setup1()
-
-# case8()
-
 # if __name__ == '__main__':
 #      = open(os.environ['OUTPUT_PATH'], 'w')
     
@@ -325,15 +330,34 @@ cll = setup1()
 #     globals()['case' + str(case_num)]()
 
 #     .close()
+
+########## QC ##########
+
+cll = setup1()
 l_node = []
 curr = cll.head
 while True:
     l_node.append(curr)
     curr = curr.next
     if curr == cll.head: break
+l_id = [x.id for x in l_node]
 
-index = 3
-l_node[index].finger = {}
-update(l_node[index])
+# index = 3
+# l_node[index].finger = {}
+# update(l_node[index])
 
-node = find_finger(l_node[3], 7174963)
+# node = find_finger(l_node[31], cll.head.id)
+node = find_node(l_node[0], cll.head.id)
+# print(node.data, node.id)
+
+########## Test Cases ##########
+
+# case1()    
+# case2()
+# case3()
+# case4()
+# case5()
+# case6()
+# case7()
+# case8()
+# case9()
