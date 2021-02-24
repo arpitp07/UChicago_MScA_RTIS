@@ -153,7 +153,7 @@ def case1():
     print(str(node.data) + '\n') 
     print(str(node.next) + '\n')
     print(str(node.finger) + '\n')
-    
+
 def case2():
     cll = CircularLinkedList()
     print(str(cll.head) + '\n')
@@ -163,7 +163,7 @@ def case2():
         for d in e:
             print(str(d) + ' ')
         print('\n')
-        
+
 def case4():
     d1 = distance(10, 10)
     d2 = distance(10, 100)
@@ -171,7 +171,7 @@ def case4():
     print(str(d1) + '\n')
     print(str(d2) + '\n')
     print(str(d3) + '\n')
-    
+
 def case5():
     cll = CircularLinkedList()
     l = [cll.sorted_insert(Node({}, k_bit)) for x in range(10)]
@@ -179,14 +179,14 @@ def case5():
     print(str(node.id) + '\n')
     print(str(node.data) + '\n')
     print(str(node.next.id) + '\n')
-    
+
 def case6():
     cll = CircularLinkedList()
     l = [cll.sorted_insert(Node({}, k_bit)) for x in range(10)]
     store(cll.head, 1606153229, 4)
     value = lookup(cll.head, 1606153229)
     print(str(value) + '\n')
-    
+
 def case7():
     # tests speed of regular insert
     arr = [x for x in range(0, 2 ** 12)]
@@ -197,7 +197,7 @@ def case7():
         start.sorted_insert(temp)
     process_time = time.time() - start_time
     print("SortedInsert took {} seconds".format(process_time))
-    
+
 def case8():
     cll = setup1()
     node = find_node(cll.head, 344973245)
@@ -206,7 +206,7 @@ def case8():
     n30 = node.finger[30]
     print(str(n28.data)+ '\n')
     print(str(n30.data) + '\n')
-    
+
 def case9():
     cll = setup1()
     value = finger_lookup(cll.head, 344973245)
@@ -218,7 +218,7 @@ def case9():
     node = find_node(cll.head, new_k)
     print(str(node.data) + '\n')
     print(str(node.id) + '\n')
-    
+
 # if __name__ == '__main__':
 #     fptr = open(os.environ['OUTPUT_PATH'], 'w')
 #     case_num = input()
