@@ -99,18 +99,21 @@ def update(node, k=k_bit):
 def find_finger(node, key, k=k_bit):
     # use the nodes finger table to get the node closest to the key
     curr = node
-    i = k
+    i = 1
+    dist = distance(curr.id, key)
     while True:
         if distance(curr.id, key) + distance(key, curr.next.id) == distance(curr.id, curr.next.id):
             return curr.next
-        elif key >= curr.finger[i].id:
+        elif distance(curr.finger[i].id, key) > dist:
+            curr = curr.finger[i-1]
+            dist = distance(curr.id, key)
+            i=1
+        elif i==32:
             curr = curr.finger[i]
-            i=k
-        elif i==1:
-            curr = curr.finger[i]
-            i=k
+            dist = distance(curr.id, key)
+            i=1
         else:
-            i-=1
+            i+=1
 
 def finger_lookup(start, key):
     # find the value stored at the key using finger table lookups starting with node "start"
@@ -237,7 +240,7 @@ def case9():
 # l_node[index].finger = {}
 # update(l_node[index])
 
-# node = find_finger(l_node[31], cll.head.id)
+# node = find_finger(l_node[0], 1)
 # node = find_node(l_node[0], cll.head.id)
 # print(node.data, node.id)
 
