@@ -103,7 +103,7 @@ def find_finger(node, key, k=k_bit):
             curr = curr.finger[i-1]
             dist = distance(curr.id, key)
             i=1
-        elif i==32:
+        elif i==k:
             curr = curr.finger[i]
             dist = distance(curr.id, key)
             i=1

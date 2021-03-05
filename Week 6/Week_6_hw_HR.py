@@ -38,7 +38,7 @@ class CircularLinkedList:
             self.head = node
             self.head.next = self.head
             return
-        elif curr.next == self.head:
+        elif curr.next == curr:
                 node.next = curr.next
                 curr.next = node
         else:
@@ -97,7 +97,7 @@ def update(node, k=k_bit):
 def find_finger(node, key, k=k_bit):
     # use the nodes finger table to get the node closest to the key
     curr = node
-    i = 1
+    i = 0
     dist = distance(curr.id, key)
     while True:
         if distance(curr.id, key) + distance(key, curr.next.id) == distance(curr.id, curr.next.id):
@@ -108,11 +108,11 @@ def find_finger(node, key, k=k_bit):
         elif distance(curr.finger[i].id, key) > dist:
             curr = curr.finger[i-1]
             dist = distance(curr.id, key)
-            i=1
-        elif i==31:
+            i=0
+        elif i==k-1:
             curr = curr.finger[i]
             dist = distance(curr.id, key)
-            i=1
+            i=0
         else:
             i+=1
     
